@@ -1,0 +1,43 @@
+schema {
+  query: Query
+  mutation: RootMutationType
+  subscription: Subscription
+}
+
+scalar JSON
+
+type LiveSubscription {
+  query: Query
+  patch: [RFC6902Operation!]
+}
+
+type Message {
+  id: ID!
+  authorName: String!
+  rawContent: String!
+  createdAt: String!
+}
+
+input MessageAddInput {
+  authorName: String!
+  rawContent: String!
+}
+
+type RFC6902Operation {
+  op: String!
+  path: String!
+  from: String
+  value: JSON
+}
+
+type RootMutationType {
+  messageAdd(input: MessageAddInput): Boolean
+}
+
+type Query {
+  messages: [Message!]!
+}
+
+type Subscription {
+  live: LiveSubscription
+}

@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "target": "es2018",
+    "lib": ["esnext"],
+    "skipLibCheck": true,
+    "outDir": "./build",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "strict": true
+  },
+  "include": ["src/**/*"]
+}

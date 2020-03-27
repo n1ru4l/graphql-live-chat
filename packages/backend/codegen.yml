@@ -1,0 +1,21 @@
+schema:
+  "./src/graphql/modules/*.ts":
+    loader: ./schema-loader.js
+config:
+  contextType: "../../@types#IContextType"
+  rootValueType: "../../@types#RootValueType"
+  nonOptionalTypename: true
+  noSchemaStitching: true
+  avoidOptionals: true
+  immutableTypes: true
+  scalars:
+    JSON: "unknown"
+  mappers:
+    Message: "../modules/message#IMessageType"
+    LiveSubscription: "../../@types#RootValueType"
+
+generates:
+  "./src/graphql/__generated__/graphql-types.ts":
+    plugins:
+      - "typescript"
+      - "typescript-resolvers"

@@ -1,0 +1,27 @@
+diff --git a/node_modules/subscriptions-transport-ws/dist/server.d.ts b/node_modules/subscriptions-transport-ws/dist/server.d.ts
+index 8ffafe2..e6efca2 100644
+--- a/node_modules/subscriptions-transport-ws/dist/server.d.ts
++++ b/node_modules/subscriptions-transport-ws/dist/server.d.ts
+@@ -44,7 +44,7 @@ export declare type SubscribeFunction = (schema: GraphQLSchema, document: Docume
+     [key: string]: any;
+ }, operationName?: string, fieldResolver?: GraphQLFieldResolver<any, any>, subscribeFieldResolver?: GraphQLFieldResolver<any, any>) => AsyncIterator<ExecutionResult> | Promise<AsyncIterator<ExecutionResult> | ExecutionResult>;
+ export interface ServerOptions {
+-    rootValue?: any;
++    rootValue?: any | (() => any);
+     schema?: GraphQLSchema;
+     execute?: ExecuteFunction;
+     subscribe?: SubscribeFunction;
+diff --git a/node_modules/subscriptions-transport-ws/dist/server.js b/node_modules/subscriptions-transport-ws/dist/server.js
+index 730c585..e3e0115 100644
+--- a/node_modules/subscriptions-transport-ws/dist/server.js
++++ b/node_modules/subscriptions-transport-ws/dist/server.js
+@@ -196,7 +196,8 @@ var SubscriptionServer = (function () {
+                                 if (_this.subscribe && is_subscriptions_1.isASubscriptionOperation(document, params.operationName)) {
+                                     executor = _this.subscribe;
+                                 }
+-                                executionPromise = Promise.resolve(executor(params.schema, document, _this.rootValue, params.context, params.variables, params.operationName));
++                                var rootValue = typeof _this.rootValue === "function" ? _this.rootValue() : _this.rootValue
++                                executionPromise = Promise.resolve(executor(params.schema, document, rootValue, params.context, params.variables, params.operationName));
+                             }
+                             return executionPromise.then(function (executionResult) { return ({
+                                 executionIterable: iterall_1.isAsyncIterable(executionResult) ?
