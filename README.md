@@ -32,7 +32,7 @@ yarn lerna run start
 
 Visit `http://127.0.0.1:3000`.
 
-### Production (Docker Mode)
+### Docker (Production Mode)
 
 ```bash
 docker build -t graphql-live-chat .
